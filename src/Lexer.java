@@ -9,16 +9,14 @@ public class Lexer {
 
     private String file; // lisp .txt
     private ArrayList<String> tokens; // guarda los tokens en un arraylist.
-    private int count;
 
     /*
      * Constructor de Lexer.
      * Llamamos a la clase de llama Tokenizer.
      */
-    public Lexer(String file, int count) {
+    public Lexer(String file) {
         this.file = file;
         this.tokens = new ArrayList<>();
-        this.count = count;
 
     }
 
