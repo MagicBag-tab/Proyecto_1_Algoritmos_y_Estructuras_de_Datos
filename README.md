@@ -1,2 +1,2 @@
 # Proyecto 1
-Este protecto consiste en realizar un interprete del lenguaje Lisp a Java.
+Este proyecto consiste en realizar un interprete del lenguaje Lisp a Java.
