@@ -1,7 +1,7 @@
 /*
- * Agarra el toString del que genero la clse Reader y lo tokeniza. (3/08/2025)
- * @author 
- */
+* Agarra el codigo de lisp y lo tokeniza. (3/08/2025)
+* @author 
+*/
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class Lexer {
 
     /*
      * Constructor de Lexer.
-     * Llamamos a la clase de llama Tokenizer.
+     * Llamamos a la clase de Tokenizer.
      */
     public Lexer(String file) {
         this.file = file;
@@ -26,21 +26,32 @@ public class Lexer {
      * operadores.
      */
     public void Tokenizer() {
-        StringBuilder token = new StringBuilder(); // cadena de caracteres donde se almacenan los tockens
+        StringBuilder token = new StringBuilder(); // cadena de caracteres donde se almacenan los tokens
 
         for (int i = 0; i < file.length(); i++) {
             char c = file.charAt(i); // cada caracter del file
 
             if (c == '(' || c == ')') {
                 if (token.length() > 0) {
-                    tokens.add(token.toString()); // agreca el token a el arraylist de tockens
-                    token.setLength(0); // reinicia el tocken ya que indican el inicio o el final de una instrucción
+                    tokens.add(token.toString()); // agreca el token a el arraylist de tokens
+                    token.setLength(0); // reinicia el token ya que indican el inicio o el final de una instrucción
                 }
-            } else if (file.isEmpty()) {
+                tokens.add(Character.toString(c));
 
+            } else if (Character.isWhitespace(c)) {
+                if (token.length() > 0) {
+                    tokens.add(token.toString());
+                    token.setLength(0);
+                }
+
+            } else {
+                token.append(c);
             }
         }
 
-    }
+        if (token.length() > 0) {
+            tokens.add(token.toString());
+        }
 
+    }
 }
