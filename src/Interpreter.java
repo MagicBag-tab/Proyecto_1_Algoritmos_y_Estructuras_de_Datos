@@ -1,3 +1,4 @@
-public class Interpreter {
+class Interpreter {
+    public static void main(String[] args) {
 
-}
+    }
