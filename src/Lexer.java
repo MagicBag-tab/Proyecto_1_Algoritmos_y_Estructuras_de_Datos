@@ -23,7 +23,7 @@ public class Lexer {
     /*
      * Tokenizer separa la cadena que se genera a partir del file (codigo de lisp) y
      * revisa que esten los parentesis y si hay espacios que separan a los
-     * operadores.
+     * operadores y los guarda en el ArrayList.
      */
     public void Tokenizer() {
         StringBuilder token = new StringBuilder(); // cadena de caracteres donde se almacenan los tokens
@@ -53,5 +53,13 @@ public class Lexer {
             tokens.add(token.toString());
         }
 
+    }
+
+    /*
+     * 6/03/2024
+     * Método que regresa la lista de tokens hecha en el método de Tokenizer
+     */
+    public ArrayList<String> getTokens() {
+        return tokens;
     }
 }
