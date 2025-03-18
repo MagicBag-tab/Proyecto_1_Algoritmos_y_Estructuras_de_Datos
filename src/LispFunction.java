@@ -1,10 +1,10 @@
 import java.util.*;
 
-class Function {
+class LispFunction {
     private final List<String> params;
     private final List<Object> body;
 
-    public Function(List<String> params, List<Object> body) {
+    public LispFunction(List<String> params, List<Object> body) {
         this.params = params;
         this.body = body;
     }
