@@ -1,6 +1,6 @@
 import java.util.*;
 
-class LispFunction {
+public class LispFunction {
     private final List<String> params;
     private final List<Object> body;
 
