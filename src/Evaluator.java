@@ -1,15 +1,15 @@
+
 /**
  * The `Evaluator` class in Java provides functionality to evaluate Lisp expressions by handling basic
  * arithmetic operations, variable assignments, function definitions, and function calls.
  */
-
 import java.util.*;
 
 class LispFunction {
     List<String> params;
     List<Object> body;
 
-    public LispFunction(List<String> params, List<Object> body) {
+    public LispFunction(List<String> params, List<Object> body){
         this.params = params;
         this.body = body;
     }
