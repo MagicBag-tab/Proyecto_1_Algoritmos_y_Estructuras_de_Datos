@@ -8,15 +8,15 @@ public class Predicates {
 
         switch (op) {
             case "EQUAL":
-                return EQUAL(args.get(0), args.get(1));
+                return toLispBoolean(EQUAL(args.get(0), args.get(1)));
             case "ATOM":
-                return ATOM(args.get(0));
+                return ATOM(args.get(0)); // ATOM ya devuelve T/NIL
             case "LIST":
-                return LIST(args.get(0));
+                return toLispBoolean(LIST(args.get(0)));
             case "<":
-                return LESS_THAN(args.get(0), args.get(1));
+                return toLispBoolean(LESS_THAN(args.get(0), args.get(1)));
             case ">":
-                return GREATER_THAN(args.get(0), args.get(1));
+                return toLispBoolean(GREATER_THAN(args.get(0), args.get(1)));
             default:
                 throw new IllegalArgumentException("Operador desconocido: " + op);
         }
@@ -29,8 +29,8 @@ public class Predicates {
     private static String ATOM(Object obj) {
         if (obj == null) { return "T"; }
         if (obj instanceof List && ((List<?>) obj).isEmpty()) { return "NIL"; }
-        if (obj instanceof List) { return "NIL"; } 
-        return "T"; 
+        if (obj instanceof List) { return "NIL"; }
+        return "T";
     }
 
     private static boolean LIST(Object obj) {
@@ -49,5 +49,10 @@ public class Predicates {
             return (Integer) a > (Integer) b;
         }
         throw new IllegalArgumentException("Los argumentos deben ser enteros para '>'");
+    }
+
+    // Convierte booleanos a valores Lisp (T/NIL)
+    private static String toLispBoolean(boolean value) {
+        return value ? "T" : "NIL";
     }
 }
