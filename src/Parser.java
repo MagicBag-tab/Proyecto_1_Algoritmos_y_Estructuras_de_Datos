@@ -23,12 +23,13 @@
       * Verifica si el token es un entero o si es un
       * símbolo y lo devuelve para ser utilizado en el método de parse.
       */
-     public Object Atom(String token) {
-         if (token.matches("-?\\d+")) { // Verifica si es un número entero
-             return Integer.parseInt(token);
-         }
-         return token; // Devuelve el símbolo si no es un número
-     }
+      public Object Atom(String token) {
+        if (token.equals("()")) { return new ArrayList<>(); } // Manejo de listas vacías
+        if (token.matches("-?\\d+")) { 
+            return Integer.parseInt(token);
+        }
+        return token;
+    }
  
      /*
       * Convierte los tokens en una estructura de listas utilizando los

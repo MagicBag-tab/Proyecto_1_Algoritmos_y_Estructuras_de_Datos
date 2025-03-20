@@ -20,11 +20,11 @@ public class Evaluator {
                 throw new IllegalArgumentException("¡Advertencia! Tu Variable no ha sido definida: " + expr);
             }
             return value;
-        } else if (expr instanceof List<?>) { 
+        } else if (expr instanceof List<?>) {
             @SuppressWarnings("unchecked")
             List<Object> exprList = (List<Object>) expr;
             if (exprList.isEmpty()) {
-                return null;
+                return new ArrayList<>(); 
             }
 
     
@@ -124,7 +124,7 @@ public class Evaluator {
         if (expr instanceof String) {
             Object value = env.getVariable((String) expr);
             if (value == null) {
-                throw new IllegalArgumentException("¡Advertencia! Tu Variable no ha sido definida: " + expr);
+                throw new IllegalArgumentException("¡Advertencia! Tu Variable no ha sido definida " + expr);
             }
             return evaluate(value); 
         } else if (expr instanceof List<?>) {

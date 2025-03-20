@@ -26,8 +26,11 @@ public class Predicates {
         return a.equals(b);
     }
 
-    private static boolean ATOM(Object obj) {
-        return !(obj instanceof List);
+    private static String ATOM(Object obj) {
+        if (obj == null) { return "T"; }
+        if (obj instanceof List && ((List<?>) obj).isEmpty()) { return "NIL"; }
+        if (obj instanceof List) { return "NIL"; } 
+        return "T"; 
     }
 
     private static boolean LIST(Object obj) {
