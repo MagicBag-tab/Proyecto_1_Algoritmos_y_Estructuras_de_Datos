@@ -14,7 +14,7 @@ public class EnviromentTest {
     @Test
     public void testGetVariableNotSet() {
         Enviroment env = new Enviroment();
-        assertNull(env.getVariable("y"));
+        assertEquals("UNDEFINED", env.getVariable("y"));
     }
 
     @Test
