@@ -136,4 +136,16 @@ public class CondTest {
         env.put("var1", false);
         assertEquals("result2", Cond.eval(conditions, env));
     }
+
+    @Test
+    public void testMulipleVariableCon2VerdaderasParaFallar() {
+        List<List<Object>> conditions = List.of(
+            List.of("var1", "result1"),
+            List.of(1, "result2"),
+            List.of(true, "result3")
+        );
+        Map<String, Object> env = new HashMap<>();
+        env.put("var1", false);
+        assertEquals("result3", Cond.eval(conditions, env));
+    } //Debe de fallar
 }
