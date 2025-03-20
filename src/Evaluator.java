@@ -120,7 +120,6 @@ public class Evaluator {
     /**
      * Evalúa una expresión dentro de un entorno específico.
      */
-    @SuppressWarnings("unchecked")
     private Object evaluateExpressionWithEnv(Object expr, Enviroment env) {
         if (expr instanceof String) {
             Object value = env.getVariable((String) expr);
