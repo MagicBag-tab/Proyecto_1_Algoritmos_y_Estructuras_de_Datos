@@ -2,35 +2,26 @@ import java.util.List;
 
 public class Predicates {
     public static Object apply(String op, List<Object> args) {
-        if (args.size() < 1) {
+        if (args.size() < 2) {
             throw new IllegalArgumentException("Número insuficiente de argumentos para " + op);
         }
 
-        switch (op) {
-            case "EQUAL":
-                return EQUAL(args.get(0), args.get(1));
-            case "ATOM":
-                return ATOM(args.get(0));
-            case "LIST":
-                return LIST(args.get(0));
-            case "<":
-                return LESS_THAN(args.get(0), args.get(1));
-            case ">":
-                return GREATER_THAN(args.get(0), args.get(1));
-            default:
-                throw new IllegalArgumentException("Operador desconocido: " + op);
-        }
+        return switch (op) {
+            case "EQUAL" -> EQUAL(args.get(0), args.get(1));
+            case "ATOM" -> ATOM(args.get(0));
+            case "LIST" -> LIST(args.get(0));
+            case "<" -> LESS_THAN(args.get(0), args.get(1));
+            case ">" -> GREATER_THAN(args.get(0), args.get(1));
+            default -> throw new IllegalArgumentException("Operador desconocido: " + op);
+        };
     }
 
     private static boolean EQUAL(Object a, Object b) {
         return a.equals(b);
     }
 
-    private static String ATOM(Object obj) {
-        if (obj == null) { return "T"; }
-        if (obj instanceof List && ((List<?>) obj).isEmpty()) { return "NIL"; }
-        if (obj instanceof List) { return "NIL"; } 
-        return "T"; 
+    private static boolean ATOM(Object obj) {
+        return !(obj instanceof List);
     }
 
     private static boolean LIST(Object obj) {
