@@ -4,7 +4,7 @@ import java.util.Map;
 public class SetQ {
     public Map<String, Object> variables;
 
-    // Define el parámetro de la variable para que se cree un nueva "Key" y "value"
+    // Define el parámetro de la variable para que se cree una nueva "Key" y "Value"
     // por función
     public SetQ() {
         this.variables = new HashMap<>();
@@ -12,7 +12,11 @@ public class SetQ {
 
     // Método para asignar un valor en específico a una variable
     public void setVariables(String nombre, Object valor) {
-        variables.put(nombre, valor);
+        if (valor instanceof String && variables.containsKey(valor)) {
+            variables.put(nombre, variables.get(valor));
+        } else {
+            variables.put(nombre, valor);
+        }
     }
 
     // Método para obtener el valor de una variable
