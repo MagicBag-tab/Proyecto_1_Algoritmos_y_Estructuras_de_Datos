@@ -128,6 +128,7 @@ public class Evaluator {
             }
             return evaluate(value); 
         } else if (expr instanceof List<?>) {
+            @SuppressWarnings("unchecked")
             List<Object> exprList = (List<Object>) expr;
             if (exprList.isEmpty()) {
                 return null;
