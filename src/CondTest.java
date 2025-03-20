@@ -1,72 +1,151 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
-
-
 
 public class CondTest {
 
     @Test
-    public void testEval_TrueCondition() {
-        Map<String, Object> env = new HashMap<>();
+    public void testSingleConditionTrue() {
         List<List<Object>> conditions = List.of(
-            List.of(List.of(">", 10, 5), "Mayor"),
-            List.of(List.of("=", 10, 5), "Igual"),
-            List.of(List.of("<", 10, 5), "Menor")
+            List.of(true, "result")
         );
-
-        Object result = Cond.eval(conditions, env);
-        assertEquals("Mayor", result);
+        Map<String, Object> env = new HashMap<>();
+        assertEquals("result", Cond.eval(conditions, env));
     }
 
     @Test
-    public void testEval_FalseConditions() {
-        Map<String, Object> env = new HashMap<>();
+    public void testSingleConditionFalse() {
         List<List<Object>> conditions = List.of(
-            List.of(List.of("<", 10, 5), "Menor"),
-            List.of(List.of("EQUAL", 10, 5), "Igual") // Cambiado de "=" a "EQUAL"
+            List.of(false, "result")
         );
-
-        Object result = Cond.eval(conditions, env);
-        assertNull(result); // No se cumple ninguna condición
-    }
-    @Test
-    public void testEval_VariableInEnvironment() {
         Map<String, Object> env = new HashMap<>();
-        env.put("x", 10);
-        env.put("y", 20);
-
-        List<List<Object>> conditions = List.of(
-            List.of(List.of("<", "x", "y"), "x es menor que y"),
-            List.of(List.of("=", "x", "y"), "x es igual a y")
-        );
-
-        Object result = Cond.eval(conditions, env);
-        assertEquals("x es menor que y", result);
+        assertNull(Cond.eval(conditions, env));
     }
 
     @Test
-    public void testEval_NoMatchingCondition() {
-        Map<String, Object> env = new HashMap<>();
+    public void testMultipleConditionsFirstTrue() {
         List<List<Object>> conditions = List.of(
-            List.of(List.of(">", 2, 5), "Mayor")
+            List.of(true, "first"),
+            List.of(false, "second")
         );
-
-        Object result = Cond.eval(conditions, env);
-        assertNull(result); // No se cumple ninguna condición
+        Map<String, Object> env = new HashMap<>();
+        assertEquals("first", Cond.eval(conditions, env));
     }
 
     @Test
-    public void testEval_InvalidArgumentTypes() {
-        Map<String, Object> env = new HashMap<>();
+    public void testMultipleConditionsSecondTrue() {
         List<List<Object>> conditions = List.of(
-            List.of(List.of(">", "hola", "mundo"), "Error")
+            List.of(false, "first"),
+            List.of(true, "second")
         );
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Cond.eval(conditions, env);
-        });
-
-        assertTrue(exception.getMessage().contains("Los argumentos para '>' deben ser enteros"));
+        Map<String, Object> env = new HashMap<>();
+        assertEquals("second", Cond.eval(conditions, env));
     }
+
+    @Test
+    public void testConditionWithVariableTrue() {
+        List<List<Object>> conditions = List.of(
+            List.of("var", "result")
+        );
+        Map<String, Object> env = new HashMap<>();
+        env.put("var", true);
+        assertEquals("result", Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testConditionWithVariableFalse() {
+        List<List<Object>> conditions = List.of(
+            List.of("var", "result")
+        );
+        Map<String, Object> env = new HashMap<>();
+        env.put("var", false);
+        assertNull(Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testConditionWithNumericValueTrue() {
+        List<List<Object>> conditions = List.of(
+            List.of(1, "result")
+        );
+        Map<String, Object> env = new HashMap<>();
+        assertEquals("result", Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testConditionWithNumericValueFalse() {
+        List<List<Object>> conditions = List.of(
+            List.of(0, "result")
+        );
+        Map<String, Object> env = new HashMap<>();
+        assertNull(Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testConditionWithBooleanValueTrue() {
+        List<List<Object>> conditions = List.of(
+            List.of(true, "result")
+        );
+        Map<String, Object> env = new HashMap<>();
+        assertEquals("result", Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testConditionWithBooleanValueFalse() {
+        List<List<Object>> conditions = List.of(
+            List.of(false, "result")
+        );
+        Map<String, Object> env = new HashMap<>();
+        assertNull(Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testEmptyConditions() {
+        List<List<Object>> conditions = List.of();
+        Map<String, Object> env = new HashMap<>();
+        assertNull(Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testConditionWithNullValue() {
+        List<List<Object>> conditions = new ArrayList<>();
+        conditions.add(Arrays.asList(null, "result"));
+        Map<String, Object> env = new HashMap<>();
+        assertNull(Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testMulipleVariable() {
+        List<List<Object>> conditions = List.of(
+            List.of("var1", "result1"),
+            List.of(0, "result2"),
+            List.of(true, "result3")
+        );
+        Map<String, Object> env = new HashMap<>();
+        env.put("var1", false);
+        assertEquals("result3", Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testMulipleVariableCon2Verdaderas() {
+        List<List<Object>> conditions = List.of(
+            List.of("var1", "result1"),
+            List.of(1, "result2"),
+            List.of(true, "result3")
+        );
+        Map<String, Object> env = new HashMap<>();
+        env.put("var1", false);
+        assertEquals("result2", Cond.eval(conditions, env));
+    }
+
+    @Test
+    public void testMulipleVariableCon2VerdaderasParaFallar() {
+        List<List<Object>> conditions = List.of(
+            List.of("var1", "result1"),
+            List.of(1, "result2"),
+            List.of(true, "result3")
+        );
+        Map<String, Object> env = new HashMap<>();
+        env.put("var1", false);
+        assertEquals("result3", Cond.eval(conditions, env));
+    } //Debe de fallar
 }
