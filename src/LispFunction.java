@@ -1,12 +1,12 @@
-import java.util.*;
+import java.util.List;
 
 public class LispFunction {
     private final List<String> params;
     private final List<Object> body;
 
     public LispFunction(List<String> params, List<Object> body) {
-        this.params = new ArrayList<>(params);
-        this.body = new ArrayList<>(body); 
+        this.params = params;
+        this.body = body;
     }
 
     public List<String> getParams() {
